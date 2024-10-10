@@ -5,6 +5,7 @@ class Animal:
         self.fed = fed
 
     def eat(self, food):
+        print(f"self.food = {self.food}")
         if self.food.edible:
             print(f'{self.name} съел {food.name}')
             self.fed = True
@@ -17,7 +18,7 @@ class Mammal(Animal):
         self.name = name
         self.alive = alive
         self.fed = fed
-        self.eat(self,food)
+        self.eat
 
 
 class Predator(Animal):
@@ -25,7 +26,7 @@ class Predator(Animal):
         self.name = name
         self.alive = alive
         self.fed = fed
-        self.eat(self,food)
+        self.eat
 
 class Plant:
     def __init__(self, name, edible=False):
@@ -53,8 +54,9 @@ print(a1.name)
 print(p1.name)
 
 
-print(a1.alive)
-print(a2.fed)
+
+print(f"a1.alive = {a1.alive}")
+print(f"a2.fed = {a2.fed}")
 a1.eat(p1)
 a2.eat(p2)
 print(a1.alive)
