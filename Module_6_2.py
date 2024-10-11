@@ -13,10 +13,12 @@ class Vehicle:
     def get_color(self):
         print("Цвет : ", self.__color)
     def print_info(self):
+        print("\n----------------------------------------------\n")
         self.get_model()
         self.horcepower()
         self.get_color()
         print("Владелец : ", self.owner)
+        print("\n----------------------------------------------\n")
     def set_color(self,new_color):
         if new_color.lower() != self.__color.lower():
             for i in range(len(self.COLOR_VARIANTS)):
@@ -38,8 +40,8 @@ vehicle1 = Sedan('Fedos', 'Toyota Mark II', 'blue', 500)
 
 vehicle1.print_info()
 vehicle1.set_color('Pink')
-vehicle1.set_color('BLACK')
 vehicle1.set_color('BLUE')
+vehicle1.set_color('BLACK')
 vehicle1.owner = 'Vasyok'
 
 # Проверяем что поменялось
