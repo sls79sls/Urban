@@ -1,7 +1,6 @@
 class result:
     def __init__(self, *args):
         self.args = args
-        # print ('type args = ', type(args))
 
     def old_(self):
         print("В команде Мастера кода участников: %s ! " % team1_num)
