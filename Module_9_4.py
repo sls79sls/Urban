@@ -1,19 +1,28 @@
+from random import choice
 first = 'Мама мыла раму'
 second = 'Рамена мало было'
-print(len(first))
-print(len(second))
-result = []
-first_list = list(first)
-second_list = list(second)
-for i in range(len(first),len(second)-1):
-    print(f'second[{i}] = {second[i]}')
-    first_list[i].append('%')
-    print(f'second[{i}] = {second[i]}')
-    print(f'first[{i}] = {first[i]}')
-for i in range(len(second)):
-        print (f'i = {i}')
-        print(f'range(len(second) = {range(len(second))}')
-        print(f'first[{i}] = {first[i]}')
-        print(f'second[{i}] = {second[i]}')
-        result = list(map(lambda x, y: x[i] == y[i], first_list, second_list))
+result = list(map(lambda x, y: x == y, first, second))
+print(result)
 
+def get_advanced_writer(file_name):
+    def write_everything(*data_set):
+        file = open(file_name, 'w', encoding='utf-8')
+        for i in list(data_set):
+            file.write(str(i))
+            file.write('\n')
+        file.close()
+    return write_everything
+
+write = get_advanced_writer('example.txt')
+write('Это строчка', ['А', 'это', 'уже', 'число', 5, 'в', 'списке'], 'а это  снова строка')
+
+class MysticBall:
+    def __init__(self,*words):
+        self.words = words
+    def __call__(self):
+        return choice(self.words)
+
+first_ball = MysticBall('Да', 'Нет', 'Наверное')
+print(first_ball())
+print(first_ball())
+print(first_ball())
