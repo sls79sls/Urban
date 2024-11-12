@@ -1,35 +1,37 @@
 import threading
-lock = threading.Lock()
-counter = 0
-
-def increment (name):
-    global counter
-    with lock:
-        for i in range(1000):
-            counter +=1
-            print (name, counter, lock.locked())
+import time
 
 
-def decrement(name):
-    global counter
-    try:
-        lock.acquire()
-        for i in range(1000):
-            counter -=1
-            print(name,counter, lock.locked())
-    except Exception:
-        pass
-    finally:
-        lock.release()
-thread1 = threading.Thread(target = increment, args = ('thread1',))
-thread2 = threading.Thread(target = decrement, args = ('thread2',))
-thread3 = threading.Thread(target = increment, args = ('thread3',))
-thread4 = threading.Thread(target = decrement, args = ('thread4',))
-thread1.start()
-thread1.join()
-thread2.start()
-thread2.join()
-thread3.start()
-thread3.join()
-thread4.start()
-thread4.join()
+def write_words(word_count, file_name):
+    data = 'Какое-то слово №'
+    with open(file_name, "w") as file:
+        for i in range(int(word_count)):
+            file.write(data)
+            file.write(str(i + 1))
+            file.write('\n')
+            time.sleep(0.1)
+        print(f'Запись в файл {file_name} успешно завершена')
+
+
+if __name__ == '__main__':
+    print(threading.enumerate())
+    started_at = time.time()
+    write_words(10, 'example1.txt')
+    write_words(30, 'example2.txt')
+    write_words(200, 'example3.txt')
+    write_words(100, 'example4.txt')
+    ended_at = time.time()
+    print(f'Работа потоков : {ended_at-started_at}')
+    print(threading.current_thread())
+    started_at = time.time()
+    thread = threading.Thread(target=write_words, args=(10, 'example5.txt'))
+    thread.start()
+    thread = threading.Thread(target=write_words, args=(30, 'example6.txt'))
+    thread.start()
+    thread = threading.Thread(target=write_words, args=(200, 'example7.txt'))
+    thread.start()
+    thread = threading.Thread(target=write_words, args=(100, 'example8.txt'))
+    thread.start()
+    thread.join()
+    ended_at = time.time()
+    print(f'Работа потоков : {ended_at - started_at}')
