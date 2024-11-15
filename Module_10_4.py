@@ -15,32 +15,44 @@ class Guest(threading.Thread):
         self.name = name
 
     def run(self):
-        print (f'len(guests) = {(len(guests))}')
-        for i in range(len(guests)):
-            self.waiting_ = randint(3, 10)
-            print(f'self.name = {self.name}, waiting_ = {self.waiting_}')
-            time.sleep(self.waiting_)
-            print(f'guests[{i}] = {guests[i]}')
+        self.waiting_ = randint(0, 2)
+        time.sleep(self.waiting_)
         return self.waiting_
 
 class Cafe(Table, Guest):
-    # def __init__(self):
+    global guests
+    def __init__(self,*tables):
+        threading.Thread.__init__(self)
+        self.guests = guests
     q = Queue()
-    def guest_arrival(self,guests):
-        pass
-
+    q.put(self.guests)
+    print (f'q.get(guests) = {q.get(guests)}')
+    def guest_arrival(self,*guests):
+        global count_
+        print(f'len(list(*guests)) : {len(list(*guests))}')
+        print(f'len(list(tables)) : {len(list(tables))}')
+        while (count_ <= len(list(*guests))):
+            for i in range (1,len(list(tables))):
+                print(f'i =  : {i}')
+                if (tables[i].guest == None):
+                    tables[i].guest = guests[count_]
+                    thread = Guest('thread Guests')
+                    thread.start()
+                    print(f'Гость, {self.guests[count_]}, сел за стол {i}')
+                continue
+            count_ += 1
+            print(f'self.guests[count_] : {self.guests[count_]}')
     def discuss_guests(self):
-
         pass
 if __name__ == '__main__':
+    count_ = 0
     tables = [Table(number) for number in range(1, 6)]
-    print (f'Table = {list(tables)[0]}')
     guests_names = [
         'Maria', 'Oleg', 'Vakhtang', 'Sergey', 'Darya', 'Arman',
         'Vitoria', 'Nikita', 'Galina', 'Pavel', 'Ilya', 'Alexandra']
     guests = [Guest(name) for name in guests_names]
-    print(f'guests = {guests}')
     #thread = Guest('thread Guests')
-    print(f'list guests = {list((guests))}')
     #thread.start()
-    cafe = Cafe(tables)
+    cafe = Cafe(*tables)
+    cafe.guest_arrival(guests)
+    cafe.discuss_guests()
