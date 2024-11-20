@@ -23,6 +23,7 @@ class Cafe:
         self.tables = tables
         self.q = Queue()
     def guest_arrival(self, *guests):
+        global guest
         for guest in guests:
             free_table = None
             for table in self.tables:
@@ -40,13 +41,18 @@ class Cafe:
     def discuss_guests(self):
         global guest
         if (not self.q.empty()):
-            print (f'self.q.empty() = {self.q.empty()}')
+            #print (f'self.q.empty() = {self.q.empty()}')
             for table in self.tables:
-                print(f'table.guest = {table.guest}')
+                #print(f'table.guest = {table.guest}')
                 if table.guest:
                     if (not guest.is_alive()):
-                        print(f'guest.is_alive() = {guest.is_alive()}')
-                        print(f"{guest.name} откушал, столик {table.number} свободен")
+                        print(f'guest.name = {guest.name}')
+                        print(f"{guest.name} покушал(-а) и ушёл(ушла), Стол номер {table.number} свободен")
+                        table.guest = None
+                        if (not self.q.empty()):
+                            table.guest = self.q.get()
+                            print(f'{table.guest} вышел(-ла) из очереди и сел(-а) за стол номер{table.number}')
+                            guest.start()
 if __name__ == '__main__':
     count_ = 0
     tables = [Table(number) for number in range(1, 6)]
