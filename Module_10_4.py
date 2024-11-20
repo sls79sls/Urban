@@ -38,7 +38,15 @@ class Cafe:
                 print(f"{guest.name} в очереди")
 
     def discuss_guests(self):
-        pass
+        global guest
+        if (not self.q.empty()):
+            print (f'self.q.empty() = {self.q.empty()}')
+            for table in self.tables:
+                print(f'table.guest = {table.guest}')
+                if table.guest:
+                    if (not guest.is_alive()):
+                        print(f'guest.is_alive() = {guest.is_alive()}')
+                        print(f"{guest.name} откушал, столик {table.number} свободен")
 if __name__ == '__main__':
     count_ = 0
     tables = [Table(number) for number in range(1, 6)]
@@ -49,5 +57,5 @@ if __name__ == '__main__':
     #thread = Guest('thread Guests')
     #thread.start()
     cafe = Cafe(*tables)
-    cafe.guest_arrival(guests)
+    cafe.guest_arrival(*guests)
     cafe.discuss_guests()
