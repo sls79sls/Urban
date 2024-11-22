@@ -15,7 +15,7 @@ class Guest(threading.Thread):
         self.name = name
 
     def run(self):
-        self.waiting_ = randint(0, 2)
+        self.waiting_ = randint(3, 10)
         time.sleep(self.waiting_)
 
 class Cafe:
@@ -23,7 +23,7 @@ class Cafe:
         self.tables = tables
         self.q = Queue()
     def guest_arrival(self, *guests):
-        global guest
+        #global guest
         for guest in guests:
             free_table = None
             for table in self.tables:
@@ -39,20 +39,20 @@ class Cafe:
                 print(f"{guest.name} в очереди")
 
     def discuss_guests(self):
-        global guest
-        if (not self.q.empty()):
+        #global guest
+        while (not self.q.empty()):
             #print (f'self.q.empty() = {self.q.empty()}')
             for table in self.tables:
                 #print(f'table.guest = {table.guest}')
                 if table.guest:
-                    if (not guest.is_alive()):
-                        print(f'guest.name = {guest.name}')
-                        print(f"{guest.name} покушал(-а) и ушёл(ушла), Стол номер {table.number} свободен")
+                    if (not table.guest.is_alive()):
+                        #print(f'table.guest.name = {table.guest.name}')
+                        print(f"{table.guest.name} покушал(-а) и ушёл(ушла), Стол номер {table.number} свободен")
                         table.guest = None
                         if (not self.q.empty()):
                             table.guest = self.q.get()
-                            print(f'{table.guest} вышел(-ла) из очереди и сел(-а) за стол номер{table.number}')
-                            guest.start()
+                            print(f'{table.guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}')
+                            table.guest.start()
 if __name__ == '__main__':
     count_ = 0
     tables = [Table(number) for number in range(1, 6)]
