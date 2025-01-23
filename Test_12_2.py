@@ -55,8 +55,10 @@ class TournamentTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         for i in cls.all_results:
-            print ('{ 1 : ', i[1] , ', 2 : ' , i[2] , '}')
-
+            print('{',end="")
+            for j in i.keys():
+                print ( j , ' : ', i[j], end="")
+            print ('}\n')
 
 if __name__ == '__main__':
     unittest.main()
